@@ -1,0 +1,13 @@
+# Local/editor state
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Dependency/runtime state
+node_modules/
+__pycache__/
+.venv/
+venv/
+*.log
