@@ -1,12 +1,14 @@
 # davidondrej-skills
 
-Public, sanitized Agent Skills from David Ondrej.
+David Ondrej's official Agent Skills.
 
-This repository is generated from a private source repository. Each publication
-passes deterministic filters, an AI sanitizer, deterministic secret scans, and
-an independent AI audit before it is pushed here.
+This repository contains reusable skills for AI coding agents, research agents,
+and workflow agents. Each skill packages a focused workflow into instructions
+that an agent can load when the task calls for it.
 
-Do not edit this repository directly. Changes are overwritten by the next
-successful publication from the private source.
+Use these skills as practical building blocks for agentic work: improving
+codebases, preparing content, researching ideas, reviewing presentations,
+working with transcripts, and other repeatable workflows from David's stack.
 
-Source mirror target: `david-internal/davidondrej-skills`
+Skills are organized under `skills/`. Each skill lives in its own folder and
+starts with a `SKILL.md` file that explains when and how to use it.
