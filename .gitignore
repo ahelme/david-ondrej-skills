@@ -4,6 +4,7 @@
 .vscode/
 *.swp
 *.swo
+.mirror-metadata.json
 
 # Dependency/runtime state
 node_modules/
