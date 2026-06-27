@@ -1,43 +1,49 @@
 ---
 name: perplexity-deep-research
-description: Run a Deep Research query with Perplexity sonar-deep-research via an OpenRouter-compatible provider using credentials supplied securely outside the repository. Builds a rigorous one-paragraph research prompt, submits it, and returns a cited markdown report. Use when a source-backed deep research run is needed. Expect 60-180s per run.
+description: Run a Deep Research query via Perplexity "sonar-deep-research" on OpenRouter. Builds a rigorous one-paragraph research prompt, sends it to the model, and returns a cited report saved to markdown. Use when a deep, source-backed research run is requested. Expect several minutes per run.
 disable-model-invocation: true
 ---
 
 # Perplexity Deep Research
 
-Send a deep-research prompt to Perplexity **`perplexity/sonar-deep-research`** through an OpenRouter-compatible chat-completions provider. The model autonomously searches, reads, and synthesizes web sources, then returns a cited report.
+Send a deep-research prompt to Perplexity **`perplexity/sonar-deep-research`** via OpenRouter. The model autonomously searches, reads, and synthesizes web sources, then returns a cited report.
 
-## Expect 60-180 seconds
+## Expect several minutes, not seconds
 
-This is **not** a normal chat call. The model runs multi-step web research, so a single request can take **60-180 seconds** or longer. Wait for completion and use a long request timeout, such as 300 seconds. Do not retry or assume failure before roughly 3 minutes.
+This is not a normal chat call. The model runs multi-step web research, so a single request can take several minutes. Use a long request timeout and avoid retrying before the request has had enough time to complete.
+
+**Success check — do not trust HTTP status alone.** Some providers may return an HTTP success status before the final streamed response is complete. Confirm success by parsing the response body, not only the status code:
+
+```bash
+jq -e '.choices[0].message.content' /tmp/dr_result.json >/dev/null && echo OK || echo "FAIL (no report content)"
+```
 
 ## Credentials
 
-Use only credentials provided securely by the runtime environment, secrets manager, or approved local configuration. Do **not** commit API keys, tokens, auth headers, shell profile details, machine-specific setup notes, or credential names to this file.
+Use your own OpenRouter API key, stored securely outside the repository, such as in an environment variable or secrets manager. Do not hardcode keys, tokens, cookies, or authorization headers in this file.
+
+Endpoint: `POST https://openrouter.ai/api/v1/chat/completions`
 
 ## Model facts
 
-- Model slug: `perplexity/sonar-deep-research`
-- Large context window; text input/output.
-- Pricing can change. Check the provider’s current pricing before running large jobs.
+- Slug: `perplexity/sonar-deep-research`
+- Context and pricing can change; check the provider documentation before running large jobs.
 
 ## Step 1 — Build the research prompt
 
-Write **one self-contained paragraph** following the `research-prompt` skill:
+Write one self-contained paragraph following a strong research-prompt structure:
 
 - Lead with the single question and the decision or end use it informs.
-- Embed all context needed to answer without back-and-forth.
-- Number 3-6 inline sub-questions: `1`, `2`, `3`, etc.
+- Embed all relevant context so no back-and-forth is required.
+- Number 3-6 inline sub-questions: 1, 2, 3, and so on.
 - Keep one mission per prompt.
-- State include/avoid constraints.
-- Prefer primary sources.
-- Treat forums and social media as weak signals only.
+- State include and avoid constraints.
+- Prefer primary sources; treat forums and social posts as weak signals only.
 - Separate fact from inference and flag low-confidence claims.
-- Per finding: include source link, specific claim, and one-line “why it matters.”
-- End with: “Output everything into a single detailed markdown file.”
+- For each finding, include: source link, specific claim, and one-line "why it matters".
+- End with: "Output everything into a single detailed markdown file."
 
-Save it to a temporary prompt file to avoid quoting issues:
+Save the prompt to a temporary file. A heredoc avoids quoting issues:
 
 ```bash
 cat > /tmp/dr_prompt.txt <<'EOF'
@@ -45,24 +51,24 @@ cat > /tmp/dr_prompt.txt <<'EOF'
 EOF
 ```
 
-## Step 2 — Run the request
+## Step 2 — Run it
 
-Submit the prompt to your approved OpenRouter-compatible client or wrapper using the model slug:
+Use your preferred OpenRouter client or HTTP tool, configured with your own secure credentials, and send a request like this payload:
 
-```text
-model: perplexity/sonar-deep-research
-input: contents of /tmp/dr_prompt.txt
-timeout: 300 seconds
+```bash
+jq -n --rawfile p /tmp/dr_prompt.txt \
+  '{model:"perplexity/sonar-deep-research", messages:[{role:"user",content:$p}]}' \
+  > /tmp/dr_request.json
 ```
 
-Credentials must be injected by the approved runtime or client configuration, not hard-coded in the command or repository.
+Submit `/tmp/dr_request.json` to the OpenRouter chat completions endpoint using your secure credential handling. Save the JSON response to `/tmp/dr_result.json`.
 
-## Step 3 — Save the report and citations
+## Step 3 — Read the report and sources
 
-After the response completes:
+```bash
+jq -r '.choices[0].message.content' /tmp/dr_result.json                        # the report
+jq -r '.choices[0].message.annotations[].url_citation.url' /tmp/dr_result.json # source URLs, if present
+jq -r '.usage.cost' /tmp/dr_result.json                                        # reported cost, if present
+```
 
-1. Extract the assistant message content as the markdown report.
-2. Extract any citation URLs returned by the provider.
-3. Save the report to a markdown file.
-4. Append or list citation URLs beneath the report.
-5. Optionally record approximate usage/cost if the provider returns it.
+Save the report to a markdown file and list the citation URLs beneath it.
