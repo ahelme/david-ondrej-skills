@@ -80,9 +80,6 @@ Phrase as status, not actions:
 ## 9. Environment / How to Run
 <Anything non-obvious needed to get running: services to start, env vars expected (names only), known setup quirks. Reference, don't expose, secrets.>
 
-## 10. Suggested Skills to Load
-<Skills the next agent should consider invoking for the remaining work, e.g. /tdd for the logout endpoint, /diagnose if the flaky test resurfaces.>
-
 ---
 ## Prompt for the Fresh Agent
 <A short ready-to-paste prompt giving background context. Use declarative statements
