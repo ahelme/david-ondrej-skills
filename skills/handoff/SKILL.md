@@ -58,27 +58,18 @@ Phrase as status, not actions:
 - Tried mocking the DB in integration tests — flaky, abandoned for a test container
 - Do NOT bump the SDK to v3 — it breaks the streaming API we rely on>
 
-## 6. Working Agreements
-<How the user prefers to operate, observed this session.
-- Review diffs before committing
-- Conventional commit messages
-- Run the full test suite before declaring done>
-
-## 7. Relevant Files & Pointers
+## 6. Relevant Files & Pointers
 <Files that matter, with line ranges and WHAT specifically is there — not just what the file is. Reference external artifacts instead of pasting them.
 - src/auth/oauth.ts:L40-L88 — provider config + token exchange
 - docs/adr/0007-auth.md — full rationale (do not duplicate here)
 - PR #142 — in-progress session work
 - Issue #150 — logout requirements>
 
-## 8. Open Work (status, with dependencies)
+## 7. Open Work (status, with dependencies)
 <What remains, described as state and ordering — NOT as a command list.
 - Logout endpoint is not yet implemented
 - Session persistence depends on the logout endpoint existing first
 - E2E auth tests are blocked until both above are complete>
-
-## 9. Environment / How to Run
-<Anything non-obvious needed to get running: services to start, env vars expected (names only), known setup quirks. Reference, don't expose, secrets.>
 
 ---
 ## Prompt for the Fresh Agent
