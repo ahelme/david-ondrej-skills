@@ -1,0 +1,40 @@
+{
+  "skill_name": "finetuning-dataset-finder",
+  "evals": [
+    {
+      "id": 1,
+      "name": "coding-react-hf-dataset",
+      "prompt": "I'm building a coding assistant and want to fine-tune Kimi K2.7 to output React + Tailwind components in our house style. I found the cfahlgren1/react-code-instructions dataset on Hugging Face. How do I turn it into something I can train on Fireworks, and is it a good choice?",
+      "expected_output": "Confirms K2.7 is a strong fit for coding; verifies dataset license (MIT); explains it's already in messages form; gives the exact prepare_fireworks_dataset.py command with --keep-only-messages + consistent system prompt; mentions train/eval split, validation, and the firectl train command.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "tool-calling-agentic",
+      "prompt": "We want Kimi K2 to reliably call our internal REST API tools. What dataset should I use to teach it function-calling, and what does the training data need to look like for Fireworks?",
+      "expected_output": "Recommends a real function-calling dataset (e.g. glaiveai/glaive-function-calling-v2, flags NC ones like xLAM); shows the Fireworks tools + tool_calls + role:tool schema; notes their own tool schemas beat public data; correct JSONL.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "own-data-csv-sizing",
+      "prompt": "I've got about 850 past customer support tickets and their resolutions in a CSV (columns: question, answer). I want to fine-tune Kimi on Fireworks so it replies in our support voice. Is 850 enough, and how do I prep the CSV?",
+      "expected_output": "Notes own data is ideal; 850 is just under the ~1000 SFT floor so suggests augment or RFT; gives the exact CSV prepare command (--user-col question --assistant-col answer --system ...); consistent system prompt; validate before upload.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "reasoning-thinking-traces",
+      "prompt": "I want to fine-tune Kimi K2.7 Code to be better at step-by-step debugging with visible reasoning. Where do I find a good reasoning dataset and how do I include the thinking traces in the Fireworks format?",
+      "expected_output": "Recommends a reasoning dataset with traces (e.g. open-r1/OpenR1-Math-220k or a code-reasoning set); explains the optional reasoning_content assistant field; notes K2.7 is a thinking model; correct format guidance.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "beginner-no-data",
+      "prompt": "ok so i wanna finetune kimi k2.7 on fireworks but honestly i dont have any data of my own. where do i even start finding a dataset? total beginner here",
+      "expected_output": "Beginner-friendly tone; explains fine-tuning teaches behavior not facts; walks Hugging Face search; offers 1-2 concrete starter datasets with license note; points to the convert+validate scripts; does not overwhelm.",
+      "files": []
+    }
+  ]
+}
