@@ -14,20 +14,20 @@ A pre-production funnel for turning raw material (a recorded podcast, an intervi
 - The creator is about to write an intro or outline but hasn't locked the angle yet
 - Any pre-production task where the topic is fuzzy
 
-If the angle is already locked, skip this skill and go to `youtube-presentation` (deck) or intro drafting.
+If the angle is already locked, skip this skill and move to deck or intro drafting.
 
 ## The Funnel (3 stages)
 
 Use this sequence — DO NOT skip steps or merge them. Each stage narrows.
 
 ### Stage 1: Read the material
-Read the full transcript/source. Form an honest read of what the episode actually IS vs. what it could be framed as. Note tension, surprises, the strongest 2-3 sound bites, the genuine through-line.
+Read the full transcript/source. Form an honest read of what the episode actually IS vs. what it could be framed as. Note tension, surprises, the strongest 2-3 sound bites, and the genuine through-line.
 
 ### Stage 2: 7 angles (broad)
 List ~7 distinct angles the video COULD be. Each angle = a different lens. Rank by punch. Mix tactical, mindset, contrarian, meta. One-liner each, no fluff. Add a bonus 8th if there's a strong outlier.
 
 Format:
-```
+```markdown
 1. **Angle Name** — one-sentence description of the lens.
 2. ...
 ```
@@ -37,7 +37,7 @@ Once the creator reacts (or just asks for it), give 10 different single-sentence
 
 Keep each under ~20 words. No two should feel like rewrites of each other.
 
-### Stage 4 (Creator picks)
+### Stage 4: Pick a direction
 The creator picks. Only then move to intro/outline/deck.
 
 ## Critical Rules
@@ -46,7 +46,7 @@ The creator picks. Only then move to intro/outline/deck.
 - **Don't draft the intro until the angle is locked.** Even if asked indirectly. Confirm the angle first.
 - **Don't combine stages.** If asked for 7 angles, give 7 angles — not 7 angles + the intro + a thumbnail idea. Single-faceted output.
 - **Ask broad discovery questions about the DOMAIN, not confirmation of what's written.** When narrowing, ask things like "who's the target viewer?" and "what's the hook angle?" — one question at a time, never combined.
-- **Honest read first.** If the episode is "a guest explaining their workflow with the host," say that. Don't pretend it's a host-led manifesto. The angle has to match the actual material.
+- **Honest read first.** If the episode is "a guest explaining their workflow with the creator as host," say that. Don't pretend it's a creator-led manifesto. The angle has to match the actual material.
 
 ## Pitfalls
 
@@ -57,5 +57,6 @@ The creator picks. Only then move to intro/outline/deck.
 
 ## Related
 
-- `youtube-presentation` — after angle is locked, build the slide deck
-- `youtube-content` — for transcript extraction
+- Use a presentation/deck workflow after the angle is locked.
+- Use a transcript extraction workflow when source material needs to be collected from a public video.
+- Use a separate course-module pre-production workflow when the output is an educational module rather than a YouTube video.

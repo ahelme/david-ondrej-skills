@@ -1,33 +1,31 @@
 ---
 name: startup-idea-brainstorming
-description: Use when the user wants to add new startup ideas to an IDEAS.md list. Triggers on "add an idea", "new startup idea", "put this in ideas.md".
+description: Use when a user wants to add a new startup idea to an IDEAS.md list. Triggers on "add an idea", "new startup idea", "put this in ideas.md".
 ---
 
 # Startup Idea Brainstorming
 
-Add new startup ideas to the user's idea list.
+Add new startup ideas to an idea list.
 
 File: `IDEAS.md`
 
-## Target audience
+## Target customer criteria
 
-Focus ideas on buyers with real budget and lower churn, such as prosumers, small businesses, SMBs, and larger businesses.
+Prioritize commercially viable customers with real budgets and lower churn risk, such as prosumers, small businesses, SMBs, and larger organizations.
 
-- Do not prioritize hobbyists or people building casually for fun.
-- Frame ideas, problems, questions, and assumptions around paying buyers rather than casual/free-tier users.
+Avoid framing ideas around casual hobbyists or free-tier users unless explicitly requested.
 
 ## Process
 
 1. Append the new idea to the end of the numbered list, continuing the numbering. Do not add to any discarded-ideas section.
-2. Write it as concisely as possible, using the user's phrasing. One line. Do not add extra framing, ROI claims, or criteria reasoning unless requested.
-3. When done, offer to commit and push if that is part of the repository workflow.
+2. Write the idea as concisely as possible, preserving the user's phrasing. Use one line unless the user asks for more detail.
+3. When done, offer to commit and push if the repository workflow supports it.
 
 ## Generating new ideas
 
-Example research prompt:
+Useful research prompts can explore:
 
-> What problems are AI-first companies having? What problems are cutting-edge agentic engineering teams having?
->
-> Focus on teams with meaningful AI/tooling budgets.
->
-> Do research and provide a list of the biggest problems.
+- Problems faced by AI-first companies.
+- Problems faced by teams building agentic engineering workflows.
+- Pain points for organizations with meaningful AI infrastructure or usage spend.
+- Repeated operational, reliability, security, evaluation, cost, or workflow issues that indicate willingness to pay.

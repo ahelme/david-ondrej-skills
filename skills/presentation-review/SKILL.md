@@ -1,41 +1,41 @@
 ---
 name: presentation-review
-description: Use when building or reviewing a YouTube video presentation slide-by-slide. Covers an alternating explain/show structure, a coverage tracker, and a bullet-by-bullet iteration loop. Triggers on presentation slides, slide outline, video deck, Google Slides, slide structure, "what's the next slide", "give me options for this bullet", presentation review.
+description: Use when building or reviewing a YouTube video presentation slide-by-slide. Covers an alternating explain/show structure, a coverage tracker, and a bullet-by-bullet iteration loop. Triggers on presentation slides, slide outlines, video decks, Google Slides, slide structure, "what's the next slide", "give me options for this bullet", and presentation review.
 ---
 
 # Presentation Review
 
-Build and refine YouTube video presentations slide-by-slide, alternating between explanation and demonstration.
+Build and refine YouTube video presentations slide-by-slide, alternating with the creator.
 
 ## Visual Style
 
 - **Background:** White. **Text:** Black. Title in serif, big.
 - **Key phrases:** Highlighted in yellow.
-- **Each slide:** One concise title + ~3 bullet points as teleprompter-style notes.
-- **Bullets:** Plain English sentences. Avoid "word — explanation" format.
-- **Showcase slides:** Red title on a near-empty slide with just the action name and any public URL if needed.
+- **Each slide:** One concise title + ~3 bullet points as teleprompter notes.
+- **Bullets:** Plain English sentences. Do not use a "word — explanation" format.
+- **Showcase slides:** Red title on near-empty slide with just the action name and any safe public URL.
 
-## Alternating Explain/Show Structure
+## Alternating Explain / Show Structure
 
-Alternate ~2 explain slides → 1 showcase step, repeating. Avoid long blocks of talking followed by long blocks of demo. Keep the pacing dynamic, vibrant, and alternating.
+Alternate roughly 2 explain slides → 1 showcase step, repeating. Avoid long blocks of talking followed by long blocks of demo. Keep the format dynamic, vibrant, and alternating.
 
 - **Explain slides** = educational, talked over.
-- **Showcase slides** = live screen recording of setup or implementation.
+- **Showcase slides** (🎬 / ✅) = live screen recording of setup or implementation.
 - Big reveal or lead-magnet moments can get 2 showcase steps back-to-back.
 
 ## Working Files
 
-Keep these in the presentation's working folder:
+Keep these in the video project folder:
 
 - `EXPLAIN.md` — numbered list of all educational topics.
 - `SHOWCASE.md` — numbered list of all setup/showcase steps.
-- Optional `topics.csv` — coverage tracker; column 2 = `mentioned` with `YES` or `NO`. Use to verify the deck covers 90-95% of the source material.
+- Optional `topics.csv` — coverage tracker; column 2 = `mentioned` (`YES`/`NO`). Use to verify the deck covers 90–95% of the master doc.
 
 Mark completed items in `EXPLAIN.md` / `SHOWCASE.md` with ✅ as slides get built.
 
 ## The Iteration Loop
 
-The creator builds the deck and asks for help one piece at a time. Your job per turn:
+The creator builds the deck in Google Slides and asks for help one piece at a time. Your job per turn:
 
 1. **They paste a slide screenshot.** Read it fully.
 2. **They ask for the next move.** Usually one of:

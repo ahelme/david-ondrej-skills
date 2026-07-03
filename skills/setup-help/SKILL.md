@@ -1,6 +1,6 @@
 ---
 name: setup-help
-description: Walk the user through setting up anything step by step. Use when the user asks for help setting up, configuring, installing, or getting something working — "help me set up X", "walk me through this", "setup-help". Differentiator: gives one current step at a time, then always lists every remaining setup step after each response.
+description: 'Walk the user through setting up anything step by step. Use when the user asks for help setting up, configuring, installing, or getting something working — "help me set up X", "walk me through this", "setup-help". Differentiator: gives one current step at a time, then always lists every remaining setup step after each response.'
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,7 @@ Guide the user through any setup, one step at a time, in plain English.
 
 ## Response format (every single response)
 
-1. **Current step** — clear, simple, step-by-step instructions for the ONE thing to do right now. Plain English. Very concise.
+1. **Current step** — ONE atomic action. A single click, field, or command — not a checklist. 1–2 lines max. If it needs sub-steps, it's too big: split it and push the rest into "Still remaining". Plain English.
 2. A `----` divider.
 3. **Still remaining** — a complete numbered list of every other setup step left after this one.
 

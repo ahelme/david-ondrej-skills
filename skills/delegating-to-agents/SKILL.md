@@ -1,61 +1,43 @@
 ---
 name: delegating-to-agents
-description: MUST be read ANY time another AI agent is involved — sending a prompt to or polling a Pi/Codex/Claude Code/Hermes/OpenCode agent, driving an agent running in another cmux pane/surface/terminal/tmux window, delegating or relaying ANYTHING to an agent in the same cmux workspace, spawning a sub-agent, or orchestrating agent-to-agent work. Read it BEFORE the first message you send to another agent. Covers the critical rule that prompts sent to a TUI agent must be ONE single line (newlines = Enter = fragmented/cut-off prompts), short polling cadence, which agent to pick, and per-agent characteristics. If you are about to type `cmux send`/`tmux send-keys` to any agent, this skill applies.
+description: How to delegate work to another AI agent — picking the right agent, sending prompts to TUI agents, polling progress. Read BEFORE any `cmux send`/`tmux send-keys` to an agent, or whenever delegating, relaying, spawning, or orchestrating agent-to-agent work.
 ---
 
 # Delegating to Agents
 
 ## Which agent to pick
 
-- **For most tasks → use the general-purpose local agent** configured in the workspace.
-- **Default for coding → Codex CLI.** It is often strong on complex, long-running software engineering tasks. Delegate hard or multi-step engineering work here when appropriate.
-- **Frontend / design → use an agent/model combination that is strong at UI, styling, and design work.**
-- **A good setup for complex work:** use one agent as the orchestrator and delegate execution to a coding agent running in another pane/surface. This is not the only setup that works, but it is a solid default for heavy, long-running tasks.
+- **Coding tasks → coding-focused CLI agent.** Use a coding agent for complex, long-running software engineering tasks.
+- **General tasks → general-purpose agent.** Use a general assistant for research, planning, summarization, and non-code work.
+- **Frontend / design → design-capable agent.** Prefer an agent that performs well on UI, styling, and design iteration.
+- **Heavy multi-step work:** use yourself as orchestrator and have a worker agent execute in a separate pane/session.
 
-## Polling cadence — keep sleeps SHORT
+## Sending prompts to a TUI agent
 
-General principle: when waiting on another agent, use short `sleep` intervals so you check often. Do not `sleep 30` by default. Start with `sleep 3-5`; if the agent is not done, just `sleep 5` again and re-check. Scale up only for genuinely heavy tasks.
+1. **ONE single line — never newlines in the message body.** In a TUI, newline = Enter: a multi-line prompt submits at the first line and the rest arrives as fragmented mid-turn steering messages. Use `. ` or `; ` instead of line breaks, then one explicit enter. For long instructions, write them to a temporary file and send: `read /tmp/task.md and follow it`.
+2. **Wrap the prompt in plain double quotes — NEVER escaped.** `cmux send --surface surface:N "your prompt"`. A common bug is emitting `\"`; in bash that can break quoting and fail with `unexpected EOF`. Inside the prompt, avoid apostrophes and literal double quotes; rephrase instead of escaping. If a send failed, check for escaped quotes first.
+3. **Exact command names:** `cmux send --surface surface:N` then `cmux send-key --surface surface:N enter`. There is NO `send-surface` or `send-key-surface`.
 
-After every check, send the user a one-line progress update: what the other agent is doing and whether it is on track. Keep it extremely concise.
+## Polling
 
-Claude Code cmux note: after Claude finishes, it may prefill a predicted next user message; that draft is Claude, not the user speaking.
+Keep sleeps short: start at 3-5s, re-check, repeat. Avoid long blind sleeps unless the task is genuinely heavy. After every check, send the user a one-line status: what the agent is doing and whether it is on track.
 
-## Sending prompts — NEVER put newlines in the message body
+Note: some agents may prefill a predicted next user message after finishing; treat that as an agent draft, not as a real user message.
 
-When sending a prompt to a TUI agent via `cmux send`, `tmux send-keys`, or similar, **the message text must be a single line**. In these TUIs a newline = Enter, so a multi-line string submits after the first line and the rest arrive as separate mid-turn messages — cutting off / fragmenting your prompt.
+## Remote environments
 
-Fixes, pick one:
-- Send the whole prompt as **one line**. Use `. ` or `; ` instead of line breaks, then one explicit `send-key enter`.
-- For long or multi-step instructions, **write them to a temporary file** and tell the agent to read it: `cmux send --surface surface:N "read /tmp/task.md and follow it"` then `cmux send-key --surface surface:N enter`.
+For work that must happen in a remote or target environment, launch the worker agent in that environment and drive that session directly. Avoid running a local agent that repeatedly proxies every step into another environment.
 
-**cmux command names:** to target another agent surface use `cmux send --surface surface:N` and `cmux send-key --surface surface:N enter`. There is no `send-surface` or `send-key-surface` command — the `--surface` flag goes on the regular `send` / `send-key`.
+## Agent reference
 
-**Always wrap the prompt in double quotes; do not escape the outer quotes.** A recurring bug is emitting `cmux send --surface surface:N \"...\"`. In bash, `\"` outside any quoting is broken and can yield `unexpected EOF while looking for matching '`. Rules:
-- Outer quoting is a plain double quote: `cmux send --surface surface:N "your prompt here"`. Do not prefix the quotes with backslashes.
-- Inside the prompt, avoid apostrophes/single-quotes and literal double quotes when possible. Rephrase instead.
-- Do not switch to single-quote outer wrapping as a workaround unless you have checked the shell quoting carefully. If a previous send failed, the cause may have been escaped outer quotes.
+Many CLI agents support portable skill/instruction files. Project-level instructions usually take precedence over global instructions.
 
-## Remote or privileged environments
-
-When work involves remote, privileged, or production-like environments, avoid relaying fragile per-command instructions through multiple layers. Use only authorized access paths, follow the project security policy, and prefer giving an appropriately scoped agent the context it needs in the environment where the work is performed. Do not include credentials, hostnames, IP addresses, or access instructions in prompts or public files.
-
-## Agent characteristics
-
-- **Fast local agents** usually launch and respond quickly. No need for long waits; `sleep 3-5` is often enough.
-- **Coding agents** are useful for implementation, refactoring, test writing, CI debugging, and longer software engineering tasks.
-- **Design-capable agents** can be better for UI, styling, layout, and product polish tasks.
-
-## Common agent reference
-
-Background only — do not over-index on this. Many agents use a portable **SKILL.md**-style convention. Project-local skill folders should generally take precedence over personal/global skill folders.
-
-- **Pi** — lightweight, model-agnostic agent with a small core toolset that can be extended via skills, prompt templates, packages, or extensions. Often useful as an orchestrator or general-purpose assistant.
-- **Hermes** — persistent autonomous agent pattern with cross-session memory, reusable skills, scheduling, and subagent delegation. Can orchestrate other agents as workers.
-- **Claude Code** — Claude-centric coding agent with project conventions such as `CLAUDE.md`, rules, agents/subagents, skills, and plugins. Skills can be injected into the main conversation rather than run as separate processes.
-- **Codex CLI** — coding-focused CLI agent with support for noninteractive execution, sandboxing, MCP-style integrations, and repository guidance files such as `AGENTS.md`.
+- **General-purpose agent:** minimal read/write/edit/bash core; may support extensions, session branching, or resume.
+- **Coding CLI agent:** optimized for software engineering tasks; may support sandboxing, non-interactive execution for CI, and repository instruction files.
+- **Claude-style coding agent:** may support project conventions, permission modes, and live skill reload.
+- **Persistent autonomous agent:** may provide cross-session memory, scheduling, and tool orchestration.
 
 ## Driving interactive CLIs
 
-- Codex, Pi, and OpenCode-style TUIs generally need a PTY when driven by tooling.
-- Claude Code can often be used in noninteractive/print-style modes depending on the workflow.
-- Orchestrator agents can drive coding CLIs as workers rather than acting only as one more coding CLI.
+- Interactive terminal agents usually need `pty=true`.
+- Non-interactive or print-mode agents may work better without a PTY.
